@@ -82,8 +82,11 @@ def create_drink(payload):
     if not title or not recipe:
         abort(400)
 
-    for item, value in recipe.items():
-        if not value:
+    for item in recipe:
+        color = item.get("color", None)
+        parts = item.get("parts", None)
+        name = item.get("name", None)
+        if not color or not parts or not name:
             abort(400)
 
     drink = Drink.query.filter_by(title=title).first()
@@ -122,8 +125,11 @@ def update_drink(payload, id):
         drink.title = title
 
     if recipe:
-        for item, value in recipe.items():
-            if not value:
+        for item in recipe:
+            color = item.get("color", None)
+            parts = item.get("parts", None)
+            name = item.get("name", None)
+            if not color or not parts or not name:
                 abort(400)
 
         drink.recipe = json.dumps(recipe)
